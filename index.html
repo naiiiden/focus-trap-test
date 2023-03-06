@@ -11,6 +11,13 @@
             margin: 1rem 0;
             width: fit-content;
         }
+
+        .modal {
+            display: none;
+            border: 1px solid red;
+            width: fit-content;
+            padding: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -19,9 +26,30 @@
     <a href="">another link</a>
     <a href="">this link leads to nowhere</a>
     <a href="">useless link</a>
-    <button>open modal</button>
+    <button class="open-close-modal">open modal</button>
+    <div class="modal">
+        <div>
+            <button class="open-close-modal">close modal X</button>
+            <h2>this is a modal</h2>
+        </div>
+        <input type="text" name="" id="" placeholder="write something here"/>
+        <input type="password" name="" id="" placeholder="password"/>
+        <input type="submit" value="submit">
+    </div>
     <button>and here is a pointless button</button>
     <button>click me</button>
     <input type="text" name="" id="" placeholder="type something">
+
+    <script>
+        let openModal = false;
+        let openModalButton = () => openModal = !openModal;            
+
+        document.querySelectorAll(".open-close-modal").forEach(btn => {
+            btn.addEventListener("click", () => {
+                openModalButton();
+                document.querySelector(".modal").style.display = openModal ? "block" : "none";
+            });
+        });
+    </script>
 </body>
 </html>
