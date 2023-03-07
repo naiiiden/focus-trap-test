@@ -52,36 +52,31 @@
         <input type="submit" value="submit" class="open-close-modal-2">
     </div>
     <script>
+    function createFocusTrap(modalElement, openModalButtons) {
         let openModal = false;
         let openModalButton = () => openModal = !openModal;            
 
-        document.querySelectorAll(".open-close-modal").forEach(btn => {
+        openModalButtons.forEach(btn => {
             btn.addEventListener("click", () => {
                 openModalButton();
-                document.querySelector(".modal").style.display = openModal ? "block" : "none";
+                modalElement.style.display = openModal ? "block" : "none";
+                focusTrap(modalElement);
             });
         });
 
-        document.querySelectorAll(".open-close-modal-2").forEach(btn => {
-            btn.addEventListener("click", () => {
-                openModalButton();
-                document.querySelector(".modal-2").style.display = openModal ? "block" : "none";
-            });
-        });
-
-        function focusTrap(element) {
+        function focusTrap(modalElement) {
             const focusableElements = "button, [href], input, textarea, [tabindex]:not([tabindex='-1'])";
-            const firstFocusableElement = element.querySelectorAll(focusableElements)[0];
-            const focusableContent = element.querySelectorAll(focusableElements);
+            const firstFocusableElement = modalElement.querySelectorAll(focusableElements)[0];
+            const focusableContent = modalElement.querySelectorAll(focusableElements);
             const lastFocusableElement = focusableContent[focusableContent.length - 1];
-            
+                    
             document.addEventListener("keydown", (e) => {
                 let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-    
+
                 if (!isTabPressed) {
                     return;
                 }
-    
+
                 if (e.shiftKey) {
                     if (document.activeElement === firstFocusableElement) {
                         lastFocusableElement.focus();
@@ -89,16 +84,19 @@
                     }
                 } else {
                     if (document.activeElement === lastFocusableElement) {
-                        firstFocusableElement.focus();
-                        e.preventDefault();
+                    firstFocusableElement.focus();
+                    e.preventDefault();
                     }
                 }
             })
             firstFocusableElement.focus();
         }
-        focusTrap(document.querySelector(".modal"));
-        focusTrap(document.querySelector(".modal-2"));
-        // https://codepen.io/myogeshchavan97/pen/zYGVbxN
+        focusTrap(modalElement);
+    }
+
+createFocusTrap(document.querySelector('.modal'), document.querySelectorAll('.open-close-modal'));
+createFocusTrap(document.querySelector('.modal-2'), document.querySelectorAll('.open-close-modal-2'));
+
     </script>
 </body>
 </html>
