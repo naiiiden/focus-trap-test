@@ -84,6 +84,11 @@
             document.addEventListener("keydown", (e) => {
                 let isTabPressed = e.key === "Tab" || e.keyCode === 9;
 
+                if (e.key === "Escape" && openModal) {
+                    openModal = false;
+                    modalElement.style.display = "none";
+                }
+
                 if (!isTabPressed) {
                     return;
                 }
