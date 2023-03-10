@@ -28,6 +28,7 @@
     <a href="">useless link</a>
     <button class="open-close-modal">open modal</button>
     <div class="modal">
+        <a href="">very important link</a>
         <div>
             <button class="open-close-modal">close modal X</button>
             <h2>this is a modal</h2>
@@ -47,11 +48,8 @@
             <button class="open-close-modal-2">close modal 2 X</button>
             <h2>this is modal 2</h2>
         </div>
-        <p>date</p>
         <input type="date" name="" id="">
-        <p>color</p>
         <input type="color" name="" id="">
-        <p>file</p>
         <input type="file" name="" id="">
         <select>
             <option value="">1</option>
@@ -67,11 +65,11 @@
     <script>
     function createFocusTrap(modalElement, openModalButtons) {
         let openModal = false;
-        let openModalButton = () => openModal = !openModal;            
+        const toggleModal = () => openModal = !openModal;            
 
         openModalButtons.forEach(btn => {
             btn.addEventListener("click", () => {
-                openModalButton();
+                toggleModal();
                 modalElement.style.display = openModal ? "block" : "none";
                 focusTrap(modalElement);
             });
@@ -82,7 +80,7 @@
             const firstFocusableElement = modalElement.querySelectorAll(focusableElements)[0];
             const focusableContent = modalElement.querySelectorAll(focusableElements);
             const lastFocusableElement = focusableContent[focusableContent.length - 1];
-                    
+
             document.addEventListener("keydown", (e) => {
                 let isTabPressed = e.key === "Tab" || e.keyCode === 9;
 
@@ -97,19 +95,18 @@
                     }
                 } else {
                     if (document.activeElement === lastFocusableElement) {
-                    firstFocusableElement.focus();
-                    e.preventDefault();
+                        firstFocusableElement.focus();
+                        e.preventDefault();
                     }
                 }
-            })
+            });
             firstFocusableElement.focus();
         }
         focusTrap(modalElement);
     }
 
-createFocusTrap(document.querySelector('.modal'), document.querySelectorAll('.open-close-modal'));
-createFocusTrap(document.querySelector('.modal-2'), document.querySelectorAll('.open-close-modal-2'));
-
+    createFocusTrap(document.querySelector('.modal'), document.querySelectorAll('.open-close-modal'));
+    createFocusTrap(document.querySelector('.modal-2'), document.querySelectorAll('.open-close-modal-2'));
     </script>
 </body>
 </html>
