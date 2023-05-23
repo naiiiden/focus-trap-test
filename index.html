@@ -17,6 +17,17 @@
             border: 1px solid red;
             width: fit-content;
             padding: 2rem;
+            position: relative;
+            z-index: 9999;            
+            background: white;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0 0 0 0;
+            z-index: 9998;
+            border: 1px solid red;
+            background: gray;
         }
     </style>
 </head>
@@ -62,12 +73,20 @@
             openModal = !openModal;
             if (openModal) {
                 previousFocusElement = document.activeElement;
-                
+
                 if (!document.querySelector('.overlay')) {
                     document.body.insertAdjacentHTML('afterbegin', '<div class="overlay"></div>');
-                } else {
-                    document.querySelector('.overlay').remove();
+                    document.querySelector('.overlay').addEventListener('click', (e) => {
+                        if (!modalElement.contains(e.target)) {
+                            toggleModal();
+                            modalElement.style.display = "none";
+                            previousFocusElement.focus();
+                            document.querySelector('.overlay').remove();
+                        }
+                    });
                 }
+            } else {
+                document.querySelector('.overlay').remove();
             }
         };
 
